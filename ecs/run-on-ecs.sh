@@ -1,13 +1,15 @@
 #!/bin/bash
-# Run spdtest.py from a throwaway Aliyun ECS instance (region = hk|sz), then delete it.
+# Run spdtest.py from a throwaway Aliyun ECS instance (region = hk), then delete it.
 # Usage:  source ~/.oss_creds && ./run-on-ecs.sh hk [ssh-private-key-path]
 set -euo pipefail
 REGION_ALIAS="${1:-hk}"
 KEY="${2:-$HOME/amtk/keys/pi-key}"
 case "$REGION_ALIAS" in
   hk) REGION=cn-hongkong  VSW=vsw-j6cd7gidpu0w7iwaz7gjc SG=sg-j6calbd0m7fsrrg7c3r1 KP=smoke-hk-key ;;
-  sz) REGION=cn-shenzhen  VSW=vsw-wz9r3h2jcmzj7zaysmc26 SG=sg-wz9gqlg5cz2cs2ujrahx KP=smoke-speed-key ;;
-  *) echo "usage: $0 hk|sz [key]"; exit 1 ;;
+  sz) echo "sz removed: intl Aliyun accounts may not run mainland ECS (compliance call" \
+           "2026-08-25, Shenzhen VPC deleted). Mainland-side numbers come from a real" \
+           "car/phone on a mainland network; cross-border path is testable from hk."; exit 1 ;;
+  *) echo "usage: $0 hk [key]"; exit 1 ;;
 esac
 export ALIBABA_CLOUD_ACCESS_KEY_ID="${ALIBABA_CLOUD_ACCESS_KEY_ID:-$OSS_ACCESS_KEY_ID}"
 export ALIBABA_CLOUD_ACCESS_KEY_SECRET="${ALIBABA_CLOUD_ACCESS_KEY_SECRET:-$OSS_ACCESS_KEY_SECRET}"
